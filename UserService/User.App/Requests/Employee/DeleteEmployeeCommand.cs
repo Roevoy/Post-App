@@ -1,0 +1,28 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using User.Core.Abstractions.Repositories;
+
+namespace User.App.Requests
+{
+    public class DeleteEmployeeCommand: IRequest<bool>
+    {
+        public Guid Id { get; set; }
+    }
+    public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeCommand, bool>
+    {
+        private readonly IEmployeeRepository _employeeRepository;
+        public DeleteEmployeeHandler(IEmployeeRepository _employeeRepository)
+        {
+            this._employeeRepository = _employeeRepository;
+        }
+        public async Task<bool> Handle (DeleteEmployeeCommand command, CancellationToken cancellationToken)
+        {
+            await _employeeRepository.Delete(command.Id);
+            return true;
+        }
+    }
+}
