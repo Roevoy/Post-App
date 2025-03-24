@@ -1,7 +1,10 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using User.App.Requests;
+using User.App.Validators;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace User.API.Controllers
 {
@@ -10,6 +13,7 @@ namespace User.API.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IMediator _mediator;
+
         public ClientController(IMediator mediator) 
         { 
             _mediator = mediator;

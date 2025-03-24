@@ -1,4 +1,5 @@
-﻿using POST.Core.Abstractions;
+﻿using Post.Core.Abstractions;
+using POST.Core.Abstractions;
 
 namespace POST.Core.Models
 {
@@ -6,17 +7,16 @@ namespace POST.Core.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Description { get; set; }
+        public State State { get; set; } = State.Preparing;
         public Guid SenderId { get; set; }
-        virtual public Client Sender { get; set; }
-        public Guid ReceiverId { get; set; }
-        public Client Receiver {  get; set; }
+        public Guid? ReceiverId { get; set; }
         public Guid DepartmentSenderId { get; set; }
         virtual public Department DepartmentSender {  get; set; }
         public Guid DestinationId { get; set; }
         public Destination Destination { get; set; }
         public ICollection<Box> Boxes { get; set; } = new List<Box>();
-        public Shipment(string Description, Guid SenderId, Guid DepartmentSenderId, 
-           Guid ReceiverId, Guid DestinationId) 
+        public Shipment(string Description, Guid SenderId, Guid DepartmentSenderId, Guid DestinationId,
+           Guid? ReceiverId = null) 
         {
             this.Description = Description;
             this.SenderId = SenderId;

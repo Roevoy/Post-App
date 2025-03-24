@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using User.App.Repositories;
 using User.Core.Abstractions.Repositories;
 using User.Core.Models;
 namespace User.App.Requests
