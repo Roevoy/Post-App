@@ -4,10 +4,10 @@ namespace POST.Core.Models
 {
     public class ParcelLocker: Destination
     {
-        public bool isAvailable { get; set; } = true;
-        public ICollection<Shipment> ExpectedShipments { get; set; } = new List<Shipment>();
-        public ICollection<Slot> Slots { get; set; } = new List<Slot>();
-        public ParcelLocker (Guid AddressId) 
+        public bool IsAvailable { get; set; } = true;
+        public Guid RecipientId { get; set; }
+        public ICollection<Slot> Slots { get; set; }
+        public ParcelLocker (Guid AddressId, ICollection<Slot> slots) 
         { 
             this.Id = Guid.NewGuid();
             this.AddressId = AddressId; 

@@ -6,7 +6,7 @@ namespace POST.Core.Models
     {
         public int Number { get; set; }
         public bool IsOpen { get; set; } = false;
-        public bool isAvailable { get; set; } = true;
+        public Guid? ShipmentId { get; set; } = null;
         public Guid Id { get; set; } = Guid.NewGuid();
         public Size Size { get; set; }
         public Guid ParcelLockerId { get; set; }

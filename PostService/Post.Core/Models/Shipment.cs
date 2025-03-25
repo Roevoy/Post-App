@@ -14,8 +14,8 @@ namespace POST.Core.Models
         virtual public Department DepartmentSender {  get; set; }
         public Guid DestinationId { get; set; }
         public Destination Destination { get; set; }
-        public ICollection<Box> Boxes { get; set; } = new List<Box>();
-        public Shipment(string Description, Guid SenderId, Guid DepartmentSenderId, Guid DestinationId,
+        public ICollection<Box> Boxes { get; set; }
+        public Shipment(string Description, Guid SenderId, Guid DepartmentSenderId, Guid DestinationId, ICollection<Box> boxes,
            Guid? ReceiverId = null) 
         {
             this.Description = Description;

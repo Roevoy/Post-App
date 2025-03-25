@@ -7,5 +7,6 @@ namespace Post.API.Controllers
     [ApiController]
     public class MainController : ControllerBase
     {
+
     }
 }
