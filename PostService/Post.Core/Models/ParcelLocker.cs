@@ -7,7 +7,7 @@ namespace POST.Core.Models
         public bool IsAvailable { get; set; } = true;
         public Guid RecipientId { get; set; }
         public ICollection<Slot> Slots { get; set; }
-        public ParcelLocker (Guid AddressId, ICollection<Slot> slots) 
+        public ParcelLocker (Guid AddressId, Guid RecipientId, ICollection<Slot> slots) 
         { 
             this.Id = Guid.NewGuid();
             this.AddressId = AddressId; 

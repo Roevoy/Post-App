@@ -13,5 +13,6 @@ namespace User.Core.Abstractions.Repositories
         public Task<Employee> GetById (Guid employee);
         public Task<List<Employee>> GetAll (CancellationToken cancellationToken);
         public Task Delete(Guid id);
+        public Task<bool> SetDepartmentId (Guid employeeId, Guid departmentId);
     }
 }

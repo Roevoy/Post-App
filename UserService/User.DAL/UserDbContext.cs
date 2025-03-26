@@ -26,6 +26,8 @@ namespace User.DAL
                 .HasKey(Employee => Employee.Id);
             modelBuilder.Entity<Employee>()
                 .HasIndex(employee => new { employee.FirstName, employee.SecondName });
+            modelBuilder.Entity<Employee>()
+                .HasIndex(e => e.DepartmentId);
         }
     }
 }

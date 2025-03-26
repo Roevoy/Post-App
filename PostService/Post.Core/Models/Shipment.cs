@@ -15,8 +15,7 @@ namespace POST.Core.Models
         public Guid DestinationId { get; set; }
         public Destination Destination { get; set; }
         public ICollection<Box> Boxes { get; set; }
-        public Shipment(string Description, Guid SenderId, Guid DepartmentSenderId, Guid DestinationId, ICollection<Box> boxes,
-           Guid? ReceiverId = null) 
+        public Shipment(string Description, Guid SenderId, Guid DepartmentSenderId, Guid DestinationId, Guid? ReceiverId = null) 
         {
             this.Description = Description;
             this.SenderId = SenderId;

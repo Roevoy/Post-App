@@ -8,9 +8,11 @@ namespace User.App.Repositories
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly UserDbContext _userDbContext;
-        public EmployeeRepository(UserDbContext userDbContext)
+        private readonly HttpClient _httpClient;
+        public EmployeeRepository(UserDbContext userDbContext, HttpClient httpClient)
         {
             _userDbContext = userDbContext;
+            _httpClient = httpClient;
         }
         public async Task Add(Employee Employee)
         {
@@ -33,6 +35,15 @@ namespace User.App.Repositories
             var Employee = await GetById(id);
             _userDbContext.Employees.Remove(Employee);
             await _userDbContext.SaveChangesAsync();
+        }
+        public async Task<bool> SetDepartmentId(Guid employeeId, Guid departmentId)
+        {
+            var employee = await GetById(employeeId);
+            var response = await _httpClient.GetAsync($"http://Post/api/GetDepartment?{departmentId}");
+            response.EnsureSuccessStatusCode();
+            employee.DepartmentId = departmentId;
+            await _userDbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace User.App.Requests
         }
         public async Task<Guid> Handle(AddEmployeeCommand command, CancellationToken cancellationToken)
         {
-            var employee = new Employee //replace on factory
+            var employee = new User.Core.Models.Employee //replace on factory
             {
                 FirstName = command.FirstName,
                 SecondName = command.SecondName,

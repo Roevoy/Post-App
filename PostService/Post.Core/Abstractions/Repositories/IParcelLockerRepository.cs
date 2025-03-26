@@ -1,10 +1,4 @@
-﻿using Post.Core.Models;
-using POST.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using POST.Core.Models;
 
 namespace Post.Core.Abstractions.Repositories
 {
