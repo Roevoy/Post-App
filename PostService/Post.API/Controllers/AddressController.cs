@@ -9,23 +9,23 @@ namespace Post.API.Controllers
     public class AddressController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public AddressController(Mediator mediator) { _mediator = mediator; }
-        [HttpPost]
+        public AddressController(IMediator mediator) { _mediator = mediator; }
+        [HttpPost("CreateAddress")]
         public async Task<IActionResult> AddAddress(AddAddressCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpDelete]
+        [HttpDelete("DeleteAddress")]
         public async Task<IActionResult> DeleteAddress (DeleteAddressCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAddressById (GetAddressByIdQuery query)
+        [HttpGet("GetAddressById")]
+        public async Task<IActionResult> GetAddressById ([FromQuery]GetAddressByIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet]
+        [HttpGet("GetAllAddresses")]
         public async Task<IActionResult> GetAllAddresses ([FromQuery]GetAllAddressesQuery query)
         {
             return Ok(await _mediator.Send(query));

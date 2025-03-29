@@ -11,7 +11,7 @@ namespace Post.App.Requests
     public class GetAllShipmentsHandler : IRequestHandler<GetAllShipmentsQuery, ICollection<Shipment>> 
     {
         private readonly IShipmentRepository _repository;
-        public GetAllShipmentsHandler(ShipmentRepository repository)
+        public GetAllShipmentsHandler(IShipmentRepository repository)
         {
             _repository = repository;
         }

@@ -9,23 +9,23 @@ namespace Post.API.Controllers
     public class HomeDeliveryController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public HomeDeliveryController(Mediator mediator) { _mediator = mediator; }
-        [HttpPost]
+        public HomeDeliveryController(IMediator mediator) { _mediator = mediator; }
+        [HttpPost("CreateHomeDelivery")]
         public async Task<IActionResult> AddHomeDelivery(AddHomeDeliveryCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpDelete]
+        [HttpDelete("DeleteHomeDelivery")]
         public async Task<IActionResult> DeleteHomeDelivery(DeleteHomeDeliveryCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet]
-        public async Task<IActionResult> GetHomeDeliveryById(GetHomeDeliveryByIdQuery query)
+        [HttpGet("GetHomeDeliveryById")]
+        public async Task<IActionResult> GetHomeDeliveryById([FromQuery]GetHomeDeliveryByIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet]
+        [HttpGet("GetAllHomeDeliveries")]
         public async Task<IActionResult> GetAllHomeDeliveryes([FromQuery] GetAllHomeDeliveryQuery query)
         {
             return Ok(await _mediator.Send(query));

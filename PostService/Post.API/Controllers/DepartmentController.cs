@@ -9,23 +9,23 @@ namespace Post.API.Controllers
     public class DepartmentController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public DepartmentController(Mediator mediator) { _mediator = mediator; }
-        [HttpPost]
+        public DepartmentController(IMediator mediator) { _mediator = mediator; }
+        [HttpPost("CreateDepartment")]
         public async Task<IActionResult> AddDepartment(AddDepartmentCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpDelete]
+        [HttpDelete("DeleteDepartment")]
         public async Task<IActionResult> DeleteDepartment(DeleteDepartmentCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet]
-        public async Task<IActionResult> GetDepartmentById(GetDepartmentByIdQuery query)
+        [HttpGet("GetDepartmentById")]
+        public async Task<IActionResult> GetDepartmentById([FromQuery]GetDepartmentByIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet]
+        [HttpGet("GetAllDepartments")]
         public async Task<IActionResult> GetAllDepartmentes([FromQuery] GetAllDepartmentsQuery query)
         {
             return Ok(await _mediator.Send(query));

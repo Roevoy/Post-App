@@ -1,5 +1,6 @@
-﻿using MediatR;
-using Post.App.Repositories;
+﻿using FluentValidation;
+using MediatR;
+using Post.App.Validators;
 using Post.Core.Abstractions.Repositories;
 using POST.Core.Models;
 
@@ -16,20 +17,16 @@ namespace Post.App.Requests
     public class AddAddressHandler : IRequestHandler<AddAddressCommand, Guid>
     {
         private readonly IAddressRepository _addressRepository;
-        public AddAddressHandler(AddressRepository addressRepository)
+        private readonly AddressValidator _addressValidator;
+        public AddAddressHandler(IAddressRepository addressRepository, AddressValidator addressValidator)
         { 
             _addressRepository = addressRepository;
+            _addressValidator = addressValidator;
         }
         public async Task<Guid> Handle (AddAddressCommand command, CancellationToken cancellationToken)
         {
-            var address = new Address
-            {
-                Region = command.Region,
-                Country = command.Country,
-                City = command.City,
-                Street = command.Street,
-                Number = command.Number,
-            };
+            var address = Address.FactoryMethod(command.Region, command.Country, command.City, command.Street,  command.Number);
+            await _addressValidator.ValidateAndThrowAsync(address, cancellationToken);
             await _addressRepository.Add(address);
             return address.Id;
         }

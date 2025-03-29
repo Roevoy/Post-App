@@ -13,7 +13,7 @@ namespace Post.App.Requests
     public class GetAllBoxesHandler : IRequestHandler<GetAllBoxesQuery, ICollection<Box>>
     {
         private readonly IShipmentRepository _shipmentRepository;
-        public GetAllBoxesHandler(ShipmentRepository shipmentRepository) { _shipmentRepository = shipmentRepository; }
+        public GetAllBoxesHandler(IShipmentRepository shipmentRepository) { _shipmentRepository = shipmentRepository; }
         public async Task<ICollection<Box>> Handle(GetAllBoxesQuery query, CancellationToken cancellationToken)
         {
             return await _shipmentRepository.GetAllBoxex(query.ShipmentId, cancellationToken);

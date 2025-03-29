@@ -1,5 +1,6 @@
 ﻿
 using POST.Core.Abstractions;
+using System.Text.Json.Serialization;
 
 namespace POST.Core.Models
 {
@@ -10,14 +11,19 @@ namespace POST.Core.Models
         public double Weight { get; set; }
         public Size Size { get; set; }
         public Guid ShipmentId { get; set; }
+        [JsonIgnore]
         public Shipment Shipment { get; set; }
-        public Box(string Description, double Weight, Size Size, Guid ShipmentId) 
+        private Box(string Description, double Weight, Size Size, Guid ShipmentId) 
         {
             this.Description = Description;
             this.Weight = Weight;
             this.Size = Size;
             this.ShipmentId = ShipmentId;
         }
-        public Box() { }
+        private Box() { }
+        public static Box FactoryMethod (string Description, double Weight, Size Size, Guid ShipmentId)
+        {
+            return new Box(Description, Weight, Size, ShipmentId);
+        }
     }
 }

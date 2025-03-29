@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Post.Core.Models;
 using POST.Core.Abstractions;
 using POST.Core.Models;
 
@@ -50,12 +51,14 @@ namespace POST.DAL
             modelBuilder.Entity<Destination>()
                 .HasDiscriminator<string>("DestinationType")
                 .HasValue<Department>("Department")
-                .HasValue<ParcelLocker>("ParcelLocker");
+                .HasValue<ParcelLocker>("ParcelLocker")
+                .HasValue<HomeDelivery>("HomeDelivery");
 
             modelBuilder.Entity<ParcelLocker>()
                 .HasMany(ParcelLocker => ParcelLocker.Slots)
                 .WithOne(Slot => Slot.ParcelLocker)
-                .HasForeignKey(Slot => Slot.ParcelLockerId);  
+                .HasForeignKey(Slot => Slot.ParcelLockerId);
+
         }
     }
 }

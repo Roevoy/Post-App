@@ -9,7 +9,6 @@ namespace Post.Core.Abstractions.Repositories
         public Task<ICollection<Shipment>> GetAll(CancellationToken cancellationToken);
         public Task<bool> DeleteById(Guid id);
         public Task<bool> AddBox(Guid shipmentId, Box box);
-        public Task<bool> DeleteBox(Guid shipmentId, Guid boxId);
         public Task<ICollection<Box>> GetAllBoxex(Guid shipmentId, CancellationToken cancellationToken);
         public Task<bool> SetState(Guid id, State state);
     }

@@ -1,5 +1,6 @@
-﻿using MediatR;
-using Post.App.Repositories;
+﻿using FluentValidation;
+using MediatR;
+using Post.App.Validators;
 using Post.Core.Abstractions.Repositories;
 using POST.Core.Models;
 
@@ -16,20 +17,26 @@ namespace Post.App.Requests
     public class AddShipmentHandler : IRequestHandler<AddShipmentCommand, Guid> 
     {
         private readonly IShipmentRepository _repository;
-        public AddShipmentHandler(ShipmentRepository repository)
+        private readonly ShipmentValidator _validator;
+        public AddShipmentHandler(IShipmentRepository repository, ShipmentValidator validator)
         {
             _repository = repository;
+            _validator = validator;
         }
         public async Task<Guid> Handle(AddShipmentCommand command, CancellationToken cancellationToken)
         {
-            var shipment = new Shipment
+            Shipment shipment;
+            if (command.ReceiverId == null)
             {
-                Description = command.Description,
-                SenderId = command.SenderId,
-                ReceiverId = command.ReceiverId,
-                DepartmentSenderId = command.DepartmentSenderId,
-                DestinationId = command.DestinationId,
-            };
+                shipment = Shipment.FactoryMethod(command.Description, command.SenderId, command.DepartmentSenderId, 
+                    command.DestinationId);
+            }
+            else
+            {
+                shipment = Shipment.FactoryMethod(command.Description, command.SenderId, command.DepartmentSenderId,
+                                    command.DestinationId, (Guid)command.ReceiverId);
+            }
+                await _validator.ValidateAndThrowAsync(shipment, cancellationToken);   
             return await _repository.Add(shipment);
         }
     }

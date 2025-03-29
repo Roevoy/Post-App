@@ -11,7 +11,7 @@ namespace Post.App.Requests
     public class DeleteAddressHandler : IRequestHandler<DeleteAddressCommand, bool>
     {
         private readonly IAddressRepository _addressRepository;
-        public DeleteAddressHandler(AddressRepository addressRepository)
+        public DeleteAddressHandler(IAddressRepository addressRepository)
         {
             _addressRepository = addressRepository;
         }

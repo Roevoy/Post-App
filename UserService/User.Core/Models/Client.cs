@@ -1,14 +1,18 @@
-﻿using User.Core.Abstractions;
-
+﻿
 namespace User.Core.Models
 {
     public class Client: User.Core.Abstractions.User
     {
-        public Client(string FirstName, string SecondName, int Age, string Email,
-            string Phone, string? ThirdName = null, DateTime? Birthday = null) 
-            : base(FirstName, SecondName, Age, Email,
-            Phone, ThirdName, Birthday)
+        private Client(string FirstName, string SecondName, string Email,
+            string Phone, DateTime Birthday, string ThirdName) 
+            : base(FirstName, SecondName, Email,
+            Phone, Birthday, ThirdName)
         {}
-        public Client() { }
+        private Client() { }
+        public static Client FacroryMethod(string FirstName, string SecondName, string Email, string Phone,
+            DateTime Birthday, string? ThirdName = null)
+        {
+            return new Client(FirstName, SecondName, Email, Phone, Birthday, ThirdName);
+        }
     }
 }

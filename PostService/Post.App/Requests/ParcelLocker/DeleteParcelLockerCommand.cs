@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using Post.App.Repositories;
 using Post.Core.Abstractions.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Post.App.Requests
 {
@@ -16,7 +11,7 @@ namespace Post.App.Requests
     public class DeleteParcelLcokerHandler : IRequestHandler<DeleteParcelLockerCommand, bool>
     {
         private readonly IParcelLockerRepository _lockerRepository;
-        public DeleteParcelLcokerHandler(ParcelLockerRepository lockerRepository)
+        public DeleteParcelLcokerHandler(IParcelLockerRepository lockerRepository)
         {
             _lockerRepository = lockerRepository;
         }

@@ -11,7 +11,7 @@ namespace Post.App.Requests
     public class GetGetAllAddressesHandler : IRequestHandler<GetAllAddressesQuery, ICollection<Address>>
     {
         private readonly IAddressRepository _addressRepository;
-        public GetGetAllAddressesHandler(AddressRepository addressRepository)
+        public GetGetAllAddressesHandler(IAddressRepository addressRepository)
         {
             _addressRepository = addressRepository;
         }

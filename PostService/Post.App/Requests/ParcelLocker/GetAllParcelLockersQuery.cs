@@ -12,7 +12,7 @@ namespace Post.App.Requests
     public class GetAllParcelLokersHandler : IRequestHandler<GetAllParcelLockersQuery, ICollection<ParcelLocker>>
     {
         private readonly IParcelLockerRepository _lockerRepository;
-        public GetAllParcelLokersHandler(ParcelLockerRepository lockerRepository) { _lockerRepository = lockerRepository; }
+        public GetAllParcelLokersHandler(IParcelLockerRepository lockerRepository) { _lockerRepository = lockerRepository; }
         public async Task<ICollection<ParcelLocker>> Handle(GetAllParcelLockersQuery query, CancellationToken cancellationToken)
         {
             return await _lockerRepository.GetAll(cancellationToken);

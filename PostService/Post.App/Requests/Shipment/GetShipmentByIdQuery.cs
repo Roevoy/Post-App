@@ -12,7 +12,7 @@ namespace Post.App.Requests
     public class GetShipmentByIdHandler : IRequestHandler<GetShipmentByIdQuery, Shipment> 
     {
         private readonly IShipmentRepository _repository;
-        public GetShipmentByIdHandler(ShipmentRepository repository)
+        public GetShipmentByIdHandler(IShipmentRepository repository)
         {
             _repository = repository;
         }

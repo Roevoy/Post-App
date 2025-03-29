@@ -122,7 +122,7 @@ namespace POST.DAL.Migrations
                     b.Property<Guid>("DestinationId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ReceiverId")
+                    b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("SenderId")
@@ -155,7 +155,7 @@ namespace POST.DAL.Migrations
                     b.Property<Guid>("ParcelLockerId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ShipmentId")
+                    b.Property<Guid>("ShipmentId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Size")
@@ -185,10 +185,17 @@ namespace POST.DAL.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("boolean");
 
+                    b.HasDiscriminator().HasValue("ParcelLocker");
+                });
+
+            modelBuilder.Entity("Post.Core.Models.HomeDelivery", b =>
+                {
+                    b.HasBaseType("POST.Core.Abstractions.Destination");
+
                     b.Property<Guid>("RecipientId")
                         .HasColumnType("uuid");
 
-                    b.HasDiscriminator().HasValue("ParcelLocker");
+                    b.HasDiscriminator().HasValue("HomeDelivery");
                 });
 
             modelBuilder.Entity("POST.Core.Abstractions.Destination", b =>

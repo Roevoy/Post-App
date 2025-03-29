@@ -2,11 +2,7 @@
 using Post.App.Repositories;
 using Post.Core.Abstractions.Repositories;
 using POST.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Post.App.Requests
 {
@@ -17,7 +13,7 @@ namespace Post.App.Requests
     public class GetAddressByIdHandler : IRequestHandler<GetAddressByIdQuery, Address>
     { 
         private readonly IAddressRepository _addressRepository;
-        public GetAddressByIdHandler(AddressRepository addressRepository)
+        public GetAddressByIdHandler(IAddressRepository addressRepository)
         {
             _addressRepository = addressRepository;
         }

@@ -15,9 +15,6 @@ namespace User.App.Validators.Requests
                 .Length(1, 30).WithMessage("Employee's surname must be between 1 and 30 characters long.");
             RuleFor(Employee => Employee.ThirdName)
                 .Length(1, 30).WithMessage("Employee's patronymic must be between 1 and 30 characters long.");
-            RuleFor(Employee => Employee.Age)
-                .NotEmpty().WithMessage("Employee's age is required.")
-                .InclusiveBetween(12, 200).WithMessage("Employee's age must be between 12 and 200 years old.");
             RuleFor(Employee => Employee.Phone)
                 .NotEmpty().WithMessage("Employee's phone number is required.")
                 .Matches(@"^\+?\d{10,15}$")

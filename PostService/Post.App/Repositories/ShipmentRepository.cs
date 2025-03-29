@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Post.Core.Abstractions;
 using Post.Core.Abstractions.Repositories;
 using POST.Core.Models;
 using POST.DAL;
-using System.Runtime.CompilerServices;
+using System.Data;
+
 
 namespace Post.App.Repositories
 {
@@ -25,17 +25,13 @@ namespace Post.App.Repositories
         public async Task<bool> AddBox(Guid shipmentId, Box box)
         {
             var shipment = await GetById(shipmentId);
+            var entry = _postDbContext.Entry(shipment);
+            if (entry.State == EntityState.Detached)
+            {
+                _postDbContext.Attach(shipment);
+            }
             shipment.Boxes.Add(box);
-            await _postDbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> DeleteBox(Guid shipmentId, Guid boxId)
-        {
-            var shipment = await GetById(shipmentId);
-            var box = shipment.Boxes.Where(box => box.Id == boxId).FirstOrDefault();
-            if (box == null) throw new KeyNotFoundException($"The box with ID {boxId} is not found in the shipment {shipmentId}.");
-            shipment.Boxes.Remove(box);
+            _postDbContext.Entry(box).State = EntityState.Added;
             await _postDbContext.SaveChangesAsync();
             return true;
         }
@@ -55,7 +51,9 @@ namespace Post.App.Repositories
 
         public async Task<Shipment> GetById(Guid id)
         {
-            var shipment = await _postDbContext.Shipments.FindAsync(id);
+            var shipment = await _postDbContext.Shipments
+                .Include(shipment => shipment.Boxes)
+                .FirstOrDefaultAsync(shipment => shipment.Id == id);
             if (shipment == null) throw new KeyNotFoundException($"The shipment with ID {id} is not found.");
             return shipment;
         }

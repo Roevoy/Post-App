@@ -2,16 +2,16 @@
 {
     public class Employee : Abstractions.User
     {
-        public Guid DepartmentId { get; set; }
-        public Employee(string FirstName, string SecondName, int Age, string Email,
-            string Phone, string? ThirdName = null, DateTime? Birthday = null)
-            : base(FirstName, SecondName, Age, Email,
-            Phone, ThirdName, Birthday)
+        public Guid DepartmentId { get; set; } = Guid.Empty;
+        private Employee(string FirstName, string SecondName, string Email,
+            string Phone, DateTime Birthday, string ThirdName)
+            : base(FirstName, SecondName, Email, Phone, Birthday, ThirdName)
         {}
-        public Employee(Guid DepartmentId)
+        private Employee() { }
+        public static Employee FacroryMethod(string FirstName, string SecondName, string Email, string Phone,
+            DateTime Birthday, string? ThirdName = null)
         {
-            this.DepartmentId = DepartmentId;
+            return new Employee(FirstName, SecondName, Email, Phone, Birthday, ThirdName);
         }
-        public Employee() { }
     }
 }

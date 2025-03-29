@@ -9,44 +9,39 @@ namespace Post.API.Controllers
     public class ShipmentController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public ShipmentController(Mediator mediator) { _mediator = mediator; }
-        [HttpPost]
+        public ShipmentController(IMediator mediator) { _mediator = mediator; }
+        [HttpPost("CreateShipment")]
         public async Task<IActionResult> AddShipment(AddShipmentCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpDelete]
+        [HttpDelete("DeleteShipment")]
         public async Task<IActionResult> DeleteShipment(DeleteShipmentCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet]
-        public async Task<IActionResult> GetShipmentById(GetShipmentByIdQuery query)
+        [HttpGet("GetShipmentById")]
+        public async Task<IActionResult> GetShipmentById([FromQuery] GetShipmentByIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet]
+        [HttpGet("GetAllShipments")]
         public async Task<IActionResult> GetAllShipmentes([FromQuery] GetAllShipmentsQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpPost]
+        [HttpPost("AddBox")]
         public async Task<IActionResult> AddBox(AddBoxCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAllBoxes(GetAllBoxesQuery query)
+        [HttpGet("GetAllBoxes")]
+        public async Task<IActionResult> GetAllBoxes([FromQuery] GetAllBoxesQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpPost]
+        [HttpPost("SetState")]
         public async Task<IActionResult> SetState(SetStateCommand command)
-        {
-            return Ok(await _mediator.Send(command));
-        }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteBox(DeleteBoxCommand command)
         {
             return Ok(await _mediator.Send(command));
         }

@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Post.App.Repositories;
-using Post.Core.Abstractions;
+using Post.App.Validators;
 using Post.Core.Abstractions.Repositories;
 using POST.Core.Abstractions;
 using POST.Core.Models;
@@ -17,16 +18,16 @@ namespace Post.App.Requests
     public class AddBoxHandler : IRequestHandler<AddBoxCommand, bool>
     {
         private readonly IShipmentRepository _shipmentRepository;
-        public AddBoxHandler(ShipmentRepository shipmentRepository) { _shipmentRepository = shipmentRepository; }
+        private readonly BoxValidator _boxValidator;
+        public AddBoxHandler(IShipmentRepository shipmentRepository, BoxValidator boxValidator) 
+        { 
+            _shipmentRepository = shipmentRepository; 
+            _boxValidator = boxValidator;
+        }
         public async Task<bool> Handle(AddBoxCommand command, CancellationToken cancellationToken)
         {
-            var box = new Box
-            {
-                ShipmentId = command.ShipmentId,
-                Description = command.BoxDescription,
-                Weight = command.BoxWeight,
-                Size = command.BoxSize
-            };
+            var box = Box.FactoryMethod(command.BoxDescription, command.BoxWeight, command.BoxSize, command.ShipmentId);
+            await _boxValidator.ValidateAndThrowAsync(box, cancellationToken);
             return await _shipmentRepository.AddBox(command.ShipmentId, box);
         }
     }

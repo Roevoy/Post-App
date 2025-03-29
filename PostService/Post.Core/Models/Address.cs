@@ -13,7 +13,7 @@ namespace POST.Core.Models
         public string Street { get; set; }
         public string Number { get; set; }
         public ICollection<Destination> Destinations { get; set; } = new List<Destination>();
-        public Address(string Region, string Country, string City, string Street, string Number)
+        private Address(string Region, string Country, string City, string Street, string Number)
         {
             this.Region = Region;
             this.Country = Country;
@@ -21,6 +21,10 @@ namespace POST.Core.Models
             this.Street = Street;
             this.Number = Number;
         }
-        public Address() { }
+        private Address() { }
+        public static Address FactoryMethod(string Region, string Country, string City, string Street, string Number)
+        {
+            return new Address(Region, Country, City, Street, Number);
+        }
     }
 }

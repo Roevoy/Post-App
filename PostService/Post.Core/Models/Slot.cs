@@ -1,4 +1,5 @@
 ﻿using POST.Core.Abstractions;
+using System.Text.Json.Serialization;
 
 namespace POST.Core.Models
 {
@@ -6,17 +7,22 @@ namespace POST.Core.Models
     {
         public int Number { get; set; }
         public bool IsOpen { get; set; } = false;
-        public Guid? ShipmentId { get; set; } = null;
+        public Guid ShipmentId { get; set; } = Guid.Empty;
         public Guid Id { get; set; } = Guid.NewGuid();
         public Size Size { get; set; }
         public Guid ParcelLockerId { get; set; }
+        [JsonIgnore]
         public ParcelLocker ParcelLocker { get; set; }
-        public Slot(int number, Size size, Guid parcelLockerId)
+        private Slot(int number, Size size, Guid parcelLockerId)
         {
             Number = number;
             Size = size;
             ParcelLockerId = parcelLockerId;
         }
-        public Slot() { }
+        private Slot() { }
+        public static Slot FactoryMethod(int number, Size size, Guid parcelLockerId)
+        {
+            return new Slot(number, size, parcelLockerId);
+        }
     }
 }

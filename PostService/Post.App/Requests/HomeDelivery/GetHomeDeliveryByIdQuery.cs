@@ -12,7 +12,7 @@ namespace Post.App.Requests
     public class GetHomeDeliveryByIdHandler : IRequestHandler<GetHomeDeliveryByIdQuery, HomeDelivery>
     {
         private readonly IHomeDeliveryRepository _repository;
-        public GetHomeDeliveryByIdHandler(HomeDeliveryRepository repository) { _repository = repository; }
+        public GetHomeDeliveryByIdHandler(IHomeDeliveryRepository repository) { _repository = repository; }
         public async Task<HomeDelivery> Handle (GetHomeDeliveryByIdQuery query, CancellationToken cancellationToken)
         {
             return await _repository.GetById(query.Id);

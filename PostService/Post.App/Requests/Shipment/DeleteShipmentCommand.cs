@@ -11,7 +11,7 @@ namespace Post.App.Requests
     public class DeleteShipmentHandler : IRequestHandler<DeleteShipmentCommand, bool> 
     {
         private readonly IShipmentRepository _repository;
-        public DeleteShipmentHandler(ShipmentRepository repository)
+        public DeleteShipmentHandler(IShipmentRepository repository)
         {
             _repository = repository;
         }

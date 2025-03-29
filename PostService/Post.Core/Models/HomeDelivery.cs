@@ -11,13 +11,17 @@ namespace Post.Core.Models
     public class HomeDelivery : Destination
     {
         public Guid RecipientId { get; set; }
-        public HomeDelivery(Guid RecipientId, Guid AddressId) 
+        private HomeDelivery(Guid RecipientId, Guid AddressId) 
         {
             this.Id = Guid.NewGuid();
             this.AddressId = AddressId;
             this.RecipientId = RecipientId;
             this.ExceptedShipments = new List<Shipment>();
         }
-        public HomeDelivery() { }
+        private HomeDelivery() { }
+        public static HomeDelivery FactoryMethod(Guid RecipientId, Guid AddressId)
+        {
+            return new HomeDelivery(RecipientId, AddressId);
+        }
     }
 }

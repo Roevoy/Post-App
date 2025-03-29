@@ -2,11 +2,6 @@
 using Post.App.Repositories;
 using Post.Core.Abstractions.Repositories;
 using POST.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Post.App.Requests
 {
@@ -17,7 +12,7 @@ namespace Post.App.Requests
     public class GetDepartmentByIdHandler : IRequestHandler<GetDepartmentByIdQuery, Department>
     {
         private readonly IDepartmentRepository _departmentRepository;
-        public GetDepartmentByIdHandler(DepartmentRepository departmentRepository)
+        public GetDepartmentByIdHandler(IDepartmentRepository departmentRepository)
         {
             _departmentRepository = departmentRepository;
         }

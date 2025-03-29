@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Post.Core.Abstractions.Repositories;
-using Post.Core.Models;
 using POST.Core.Models;
 using POST.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Post.App.Repositories
 {
@@ -41,7 +36,10 @@ namespace Post.App.Repositories
 
         public async Task<ParcelLocker> GetById(Guid id)
         {
-            var parcelLocker = await _dbContext.Destinations.OfType<ParcelLocker>().FirstOrDefaultAsync(pl => pl.Id == id);
+            var parcelLocker = await _dbContext.Destinations
+                .OfType<ParcelLocker>()
+                .Include(pl => pl.Slots)
+                .FirstOrDefaultAsync(pl => pl.Id == id);
             if (parcelLocker == null) { throw new KeyNotFoundException($"The parcel locker with ID {id} is not found."); }
             return parcelLocker;
         }
@@ -49,6 +47,19 @@ namespace Post.App.Repositories
         {
             var parcelLocker = await GetById(parcelLockerId);
             return parcelLocker.Slots.ToList();
+        }
+        public async Task<Guid> AddSlot (Slot slot, Guid parcelLockerId)
+        {
+            var parcelLocker = await GetById (parcelLockerId);
+            var entry = _dbContext.Entry(parcelLocker);
+            if (entry.State == EntityState.Detached)
+            {
+                _dbContext.Attach(parcelLocker);
+            }
+            parcelLocker.Slots.Add(slot);
+            _dbContext.Entry(slot).State = EntityState.Added;
+            await _dbContext.SaveChangesAsync();
+            return slot.Id;
         }
     }
 }

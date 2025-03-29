@@ -1,12 +1,9 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
+using Post.App.Validators;
 using Post.Core.Abstractions.Repositories;
 using Post.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Post.App.Requests
 {
@@ -17,15 +14,21 @@ namespace Post.App.Requests
     }
     public class AddHomeDeliveryHandler : IRequestHandler<AddHomeDeliveryCommand, Guid>
     {
+        private readonly HttpClient _httpClient;
         private readonly IHomeDeliveryRepository _repository;
-        public AddHomeDeliveryHandler(IHomeDeliveryRepository repository) { _repository = repository; }
+        private readonly HomeDeliveryValidator _validator;
+        public AddHomeDeliveryHandler(IHomeDeliveryRepository repository, HomeDeliveryValidator validator, HttpClient httpClient)
+        {
+            _repository = repository;
+            _validator = validator;
+            _httpClient = httpClient;
+        }
         public async Task<Guid> Handle(AddHomeDeliveryCommand command, CancellationToken cancellationToken)
         {
-            var homeDelivery = new HomeDelivery
-            {
-                AddressId = command.addressId,
-                RecipientId = command.recipientId
-            };
+            var response = await _httpClient.GetAsync($"http://localhost:5001/api/Client/GetClient?Id={command.recipientId}");
+            response.EnsureSuccessStatusCode();
+            var homeDelivery = HomeDelivery.FactoryMethod(command.recipientId, command.addressId);
+            await _validator.ValidateAndThrowAsync(homeDelivery, cancellationToken);    
             return await _repository.Add(homeDelivery);
         }
     }

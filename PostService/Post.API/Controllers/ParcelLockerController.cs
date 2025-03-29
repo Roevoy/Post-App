@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Post.App.Requests;
 
@@ -10,31 +9,36 @@ namespace Post.API.Controllers
     public class ParcelLockerController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public ParcelLockerController(Mediator mediator) { _mediator = mediator; }
-        [HttpPost]
+        public ParcelLockerController(IMediator mediator) { _mediator = mediator; }
+        [HttpPost("AddParcelLocker")]
         public async Task<IActionResult> AddParcelLocker(AddParcelLockerCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpDelete]
+        [HttpDelete("DeleteParcelLocker")]
         public async Task<IActionResult> DeleteParcelLocker(DeleteParcelLockerCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpGet]
-        public async Task<IActionResult> GetParcelLockerById(GetParcelLockerByIdQuery query)
+        [HttpGet("GetParcelLockerById")]
+        public async Task<IActionResult> GetParcelLockerById([FromQuery]GetParcelLockerByIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet]
+        [HttpGet("GetAllParcelLockers")]
         public async Task<IActionResult> GetAllParcelLockeres([FromQuery] GetAllParcelLockersQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpGet] 
-        public async Task<IActionResult> GetAllSlots (GetAllSlotsQuery query)
+        [HttpGet("GetAllSlots")] 
+        public async Task<IActionResult> GetAllSlots ([FromQuery]GetAllSlotsQuery query)
         {
             return Ok(await _mediator.Send(query));
+        }
+        [HttpPost("AddSlot")]
+        public async Task<IActionResult> AddSlot (AddSlotCommand command)
+        {
+            return Ok(await _mediator.Send(command));
         }
     }
 }

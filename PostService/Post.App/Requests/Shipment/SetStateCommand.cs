@@ -13,7 +13,7 @@ namespace Post.App.Requests
     public class SetStateHandler : IRequestHandler<SetStateCommand, bool>
     {
         private readonly IShipmentRepository _shipmentRepository;
-        public SetStateHandler(ShipmentRepository shipmentRepository) { _shipmentRepository = shipmentRepository; }
+        public SetStateHandler(IShipmentRepository shipmentRepository) { _shipmentRepository = shipmentRepository; }
         public async Task<bool> Handle(SetStateCommand command, CancellationToken cancellationToken)
         {
             return await _shipmentRepository.SetState(command.ShipmentId, command.State);

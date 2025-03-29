@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using User.App.Repositories;
 using User.App.Requests;
 using User.Core.Abstractions.Repositories;
 using User.DAL;
 using User.App.Validators;
 using MediatR;
+using User.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,7 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetClientByIdHandler).Assembly));
 builder.Services.AddValidatorsFromAssemblyContaining<ClientValidator>();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
-;
+builder.Services.AddScoped<HttpClient>();
 var app = builder.Build();
 app.UseRouting();
 
@@ -39,5 +39,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.Run();
+
+//ловить исключения
+//добавить регистрацию и авторизацию
+//внедрить логирование
+//написать юнит-тесты
+//имплементировать брокеры сообщений для событий
+//заменить строки подключения и запросов

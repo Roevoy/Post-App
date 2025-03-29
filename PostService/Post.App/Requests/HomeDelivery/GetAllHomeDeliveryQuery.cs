@@ -1,11 +1,7 @@
 ﻿using MediatR;
+using Post.App.Repositories;
 using Post.Core.Abstractions.Repositories;
 using Post.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Post.App.Requests
 {

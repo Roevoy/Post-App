@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using User.Core.Abstractions.Repositories;
 
 namespace User.App.Requests.Employee
@@ -16,13 +11,17 @@ namespace User.App.Requests.Employee
     public class SetDepartmentHandler : IRequestHandler<SetDepartmentIdCommand, bool>
     {
         private readonly IEmployeeRepository _employeeRepository;
-        public SetDepartmentHandler(IEmployeeRepository employeeRepository)
+        private readonly HttpClient _httpClient;
+        public SetDepartmentHandler(IEmployeeRepository employeeRepository, HttpClient httpClient)
         {
             _employeeRepository = employeeRepository;
+            _httpClient = httpClient;
         }
 
         public async Task<bool> Handle (SetDepartmentIdCommand command, CancellationToken cancellationToken)
         {
+            var response = await _httpClient.GetAsync($"http://localhost:5002/Post/api/Department/GetDepartmentById?Id={command.DepartmentId}");
+            response.EnsureSuccessStatusCode();
             return await _employeeRepository.SetDepartmentId(command.EmployeeId, command.DepartmentId);
         }
     }
