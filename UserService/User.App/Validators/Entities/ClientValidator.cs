@@ -28,6 +28,8 @@ namespace User.App.Validators
             RuleFor(client => client.Birthday)
                 .Must(date => date <= DateTime.Today.AddYears(-12)).WithMessage("Client's age must be not less then 12 years old.")
                 .Must(date => date >= DateTime.Today.AddYears(-200)).WithMessage("Client's can't be more then 200 years old.");
+            RuleFor(client => client.passwordHash)
+                .NotEmpty().WithMessage("Client's password hash is required.");
         }
     }
 }

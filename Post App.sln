@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostService", "PostService"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{E3DF1090-E372-4F2D-8252-029F8B26CE03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Infrastructure", "UserService\User.Infrastructure\User.Infrastructure.csproj", "{F47669AF-2834-40C0-B111-0753BFFD0AF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{3D0FD953-F41F-4988-C0AF-8D5D6665EFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D0FD953-F41F-4988-C0AF-8D5D6665EFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D0FD953-F41F-4988-C0AF-8D5D6665EFF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F47669AF-2834-40C0-B111-0753BFFD0AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F47669AF-2834-40C0-B111-0753BFFD0AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F47669AF-2834-40C0-B111-0753BFFD0AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F47669AF-2834-40C0-B111-0753BFFD0AF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{1961FB3D-11DB-5CD6-922D-3BC90F66133C} = {E3DF1090-E372-4F2D-8252-029F8B26CE03}
 		{AFAF79FB-93BA-663E-0FC1-1F14786C5546} = {E3DF1090-E372-4F2D-8252-029F8B26CE03}
 		{3D0FD953-F41F-4988-C0AF-8D5D6665EFF8} = {E3DF1090-E372-4F2D-8252-029F8B26CE03}
+		{F47669AF-2834-40C0-B111-0753BFFD0AF8} = {E3DF1090-E372-4F2D-8252-029F8B26CE03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5EF7F81D-2EBD-4F57-B752-695895B8B742}

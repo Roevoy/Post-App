@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using User.Core.Models;
+﻿using User.Core.Models;
 
-namespace User.Core.Abstractions.Repositories
+namespace User.App.Interfaces
 {
     public interface IEmployeeRepository
     {

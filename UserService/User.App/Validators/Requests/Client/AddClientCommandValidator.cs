@@ -26,6 +26,12 @@ namespace User.App.Validators.Requests
             RuleFor(client => client.Birthday)
                 .Must(date => date <= DateTime.Today.AddYears(-12)).WithMessage("Client's age must be not less then 12 years old.")
                 .Must(date => date >= DateTime.Today.AddYears(-200)).WithMessage("Client's can't be more then 200 years old.");
+            RuleFor(client => client.Password)
+                .NotEmpty().WithMessage("Client's password is required.")
+                .MinimumLength(8).WithMessage("Password must contain at least 8 symbols.")
+                .Matches(@"[A-Z]").WithMessage("Password must contain at least one big letter.")
+                .Matches(@"[a-z]").WithMessage("Password must contain at least one small letter.")
+                .Matches(@"[0-9]").WithMessage("Password must contain at least one digit.");
         }
     }
 }

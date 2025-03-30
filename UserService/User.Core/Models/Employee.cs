@@ -4,14 +4,14 @@
     {
         public Guid DepartmentId { get; set; } = Guid.Empty;
         private Employee(string FirstName, string SecondName, string Email,
-            string Phone, DateTime Birthday, string ThirdName)
-            : base(FirstName, SecondName, Email, Phone, Birthday, ThirdName)
+            string Phone, DateTime Birthday, string PasswordHash,string ThirdName)
+            : base(FirstName, SecondName, Email, Phone, Birthday, PasswordHash, ThirdName)
         {}
         private Employee() { }
         public static Employee FacroryMethod(string FirstName, string SecondName, string Email, string Phone,
-            DateTime Birthday, string? ThirdName = null)
+            DateTime Birthday, string PasswordHash, string? ThirdName = null)
         {
-            return new Employee(FirstName, SecondName, Email, Phone, Birthday, ThirdName);
+            return new Employee(FirstName, SecondName, Email, Phone, Birthday, PasswordHash, ThirdName);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using User.Core.Abstractions.Repositories;
+using User.App.Interfaces;
 
 namespace User.App.Requests.Employee
 {

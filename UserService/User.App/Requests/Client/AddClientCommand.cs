@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using User.App.Validators;
-using User.Core.Abstractions.Repositories;
+using User.App.Interfaces;
 using User.Core.Models;
+using FluentValidation;
 namespace User.App.Requests
 {
     public class AddClientCommand : IRequest<Guid>
@@ -13,20 +13,25 @@ namespace User.App.Requests
         public DateTime Birthday { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Password { get; set; }
     }
     public class AddClientHandler : IRequestHandler<AddClientCommand, Guid>
     {
+        private readonly IPasswordHasher _passwordHasher;
         private readonly IClientRepository _clientRepository;
         private readonly ClientValidator _clientValidator;
-        public AddClientHandler(IClientRepository clientRepository, ClientValidator clientValidator)
+        public AddClientHandler(IClientRepository clientRepository, ClientValidator clientValidator, 
+            IPasswordHasher passwordHasher)
         {
             _clientRepository = clientRepository;
             _clientValidator = clientValidator;
+            _passwordHasher = passwordHasher;
         }
         public async Task<Guid> Handle(AddClientCommand command, CancellationToken cancellationToken)
         {
-            var client = Client.FacroryMethod(command.FirstName, command.SecondName, 
-                command.Email, command.Phone, command.Birthday, command.ThirdName);
+            var hashedPassword = _passwordHasher.Generate(command.Password);
+            var client = Client.FacroryMethod(command.FirstName, command.SecondName,
+                command.Email, command.Phone, command.Birthday, hashedPassword, command.ThirdName);
             await _clientValidator.ValidateAndThrowAsync(client, cancellationToken);
             await _clientRepository.Add(client);
             return client.Id;

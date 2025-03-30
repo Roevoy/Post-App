@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using User.Core.Abstractions.Repositories;
+using User.App.Interfaces;
 using User.Core.Models;
 using User.DAL;
 

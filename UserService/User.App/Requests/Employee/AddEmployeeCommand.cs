@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using User.App.Validators;
-using User.Core.Abstractions.Repositories;
-using User.Core.Models;
+using User.App.Interfaces;
 namespace User.App.Requests
 {
     public class AddEmployeeCommand : IRequest<Guid>

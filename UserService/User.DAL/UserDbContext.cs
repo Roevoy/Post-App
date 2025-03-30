@@ -21,6 +21,9 @@ namespace User.DAL
                 .HasIndex(client => client.Phone);
             modelBuilder.Entity<Client>()
                 .HasIndex(client => new { client.FirstName, client.SecondName });
+            modelBuilder.Entity<Client>()
+                .HasIndex(client => client.Email)
+                .IsUnique();
 
             modelBuilder.Entity<Employee>()
                 .HasKey(Employee => Employee.Id);
@@ -28,6 +31,9 @@ namespace User.DAL
                 .HasIndex(employee => new { employee.FirstName, employee.SecondName });
             modelBuilder.Entity<Employee>()
                 .HasIndex(e => e.DepartmentId);
+            modelBuilder.Entity<Employee>()
+                .HasIndex(e => e.Email)
+                .IsUnique();
         }
     }
 }

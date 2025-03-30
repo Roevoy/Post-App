@@ -2,14 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using User.App.Repositories;
 using User.App.Requests;
-using User.Core.Abstractions.Repositories;
+using User.App.Interfaces;
 using User.DAL;
 using User.App.Validators;
 using MediatR;
 using User.API.Middlewares;
+using User.Infrastructure;
+using User.API.Extensions;
+using Microsoft.Extensions.Options;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
+var configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -24,6 +28,11 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetCl
 builder.Services.AddValidatorsFromAssemblyContaining<ClientValidator>();
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 builder.Services.AddScoped<HttpClient>();
+builder.Services.AddScoped<IJWTProvider, JWTProvider>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
+builder.Services.AddApiAuthentication(builder.Services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 app.UseRouting();
 
@@ -35,14 +44,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.Run();
 
-//ловить исключения
 //добавить регистрацию и авторизацию
 //внедрить логирование
 //написать юнит-тесты
