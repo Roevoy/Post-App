@@ -50,9 +50,3 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.Run();
-
-//добавить регистрацию и авторизацию
-//внедрить логирование
-//написать юнит-тесты
-//имплементировать брокеры сообщений для событий
-//заменить строки подключения и запросов

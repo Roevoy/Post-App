@@ -40,7 +40,7 @@ namespace Post.API.Controllers
         {
             return Ok(await _mediator.Send(query));
         }
-        [HttpPost("SetState")]
+        [HttpPatch("SetState")]
         public async Task<IActionResult> SetState(SetStateCommand command)
         {
             return Ok(await _mediator.Send(command));
